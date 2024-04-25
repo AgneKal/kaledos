@@ -1,0 +1,28 @@
+<div class="card mt-4">
+    <div class="card-header">Dovanų sąrašas</div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nr.</th>
+                    <th>Kam skirta</th>
+                    <th>Pavadinimas</th>
+                    <th>Statusas</th>
+                    <th class="table-veiksmai">Veiksmai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let good of goods; let i=index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ good.recipient }}</td>
+                    <td>{{ good.description }}</td>
+                    <td>{{ good.status }}</td>
+                    <td>
+                        <a href="" class="btn btn-success">Redaguoti</a>&nbsp;
+                        <a href="" class="btn btn-danger">Ištrinti</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
