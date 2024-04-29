@@ -17,9 +17,10 @@
                     <td>{{ good.recipient }}</td>
                     <td>{{ good.description }}</td>
                     <td>{{ good.status }}</td>
-                    <td>
-                        <a href="" class="btn btn-success">Redaguoti</a>&nbsp;
-                        <a href="" class="btn btn-danger">Ištrinti</a>
+                    <td class="text-center">
+                        <a href="" class="btn btn-success" [routerLink]="['/edit', good.id]">Redaguoti</a>
+                        &nbsp;&nbsp;
+                        <button href="" class="btn btn-danger" (click)="deleteRecord(good.id)">Ištrinti</button>
                     </td>
                 </tr>
             </tbody>

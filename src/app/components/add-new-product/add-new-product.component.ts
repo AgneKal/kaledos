@@ -23,7 +23,12 @@ export class AddNewProductComponent {
       this.goodsService.addGood({
         recipient: this.recipient,
         description: this.description,
-        status: this.status
+        status: this.status,
+        id: null,
+      }).subscribe(()=>{
+        this.recipient=null;
+        this.description=null;
+        this.status=null;
       })
     }
   }
