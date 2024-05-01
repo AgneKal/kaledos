@@ -1,7 +1,9 @@
 <div class="card mt-4">
+    <app-loading *ngIf="isLoading"></app-loading>
     <div class="card-header">Dovanų sąrašas</div>
     <div class="card-body">
-        <table class="table">
+        <div class="alert alert-danger" *ngIf="isError">Klaida</div>
+        <table class="table" *ngIf="!isError && !isLoading">
             <thead>
                 <tr>
                     <th>Nr.</th>
