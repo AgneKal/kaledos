@@ -5,11 +5,12 @@ import { Good } from '../../models/good';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-edit-product',
   standalone: true,
-  imports: [FormsModule, CommonModule, LoadingComponent],
+  imports: [FormsModule, CommonModule, LoadingComponent, ErrorComponent],
   templateUrl: './edit-product.component.html',
   styleUrl: './edit-product.component.css'
 })
@@ -19,6 +20,7 @@ export class EditProductComponent {
   public recipient:string|null = null;
   public status:string|null = null;
   public isLoading = false;
+  public isError = false;
 
   constructor(private route:ActivatedRoute, private router:Router, private goodsService: GoodsService){
     this.id = this.route.snapshot.params['id'];
@@ -38,10 +40,22 @@ export class EditProductComponent {
         status: this.status
       }
       this.isLoading = true;
-      this.goodsService.updateRecord(record).subscribe(()=>{
+      this.goodsService.updateRecord(record)
+        .subscribe({
+        next: ()=>{
         this.isLoading = false;
+        this.isError = false;
         this.router.navigate(['list']);
-      })
+        },
+        error: () => {
+        this.isLoading = false;
+        this.isError = true;
+        }
+        })
     }
+  }
+
+  public closeError() {
+    this.updateRecord();
   }
 }

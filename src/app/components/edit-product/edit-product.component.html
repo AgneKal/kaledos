@@ -4,6 +4,7 @@
         Pridėti naują kalėdinį pirkinį
     </div>
     <div class="card-body">
+        <app-error *ngIf="isError" [message]="'Atnaujinti įrašo nepavyko'" (close)="closeError()"></app-error>
         <div class="mb-3">
             <label type="text" class="form-label">Kam skirta dovana</label>
             <input type="text" class="form-control" [(ngModel)]="recipient">

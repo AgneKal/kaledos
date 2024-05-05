@@ -4,11 +4,12 @@ import { Good } from '../../models/good';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-list-of-goods',
   standalone: true,
-  imports: [CommonModule, RouterLink, LoadingComponent],
+  imports: [CommonModule, RouterLink, LoadingComponent, ErrorComponent],
   templateUrl: './list-of-goods.component.html',
   styleUrl: './list-of-goods.component.css'
 })
@@ -45,9 +46,19 @@ export class ListOfGoodsComponent {
   public deleteRecord(id:string|null) {
     if (id != null){
       this.isLoading = true;
-      this.goodService.deleteRecord(id).subscribe(()=>{
+      this.goodService.deleteRecord(id)
+      .subscribe({
+        next:()=>{
         this.loadData();
-      })
+      },
+      error: ()=> {
+        this.isLoading = false;
+        this.isError = true;
+      }})
     }
+  }
+
+  public closeError() {
+    this.loadData();
   }
 }

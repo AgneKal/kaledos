@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Good } from '../models/good';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoodsService {
   
-public goods: Good[] = [];
+  public goods: Good[] = [];
+
+  public onGoodsCountChange = new EventEmitter();
 
   constructor(private http:HttpClient) {  }
 
   public addGood(item: Good) {
     this.goods.push(item);
-    return this.http.post("https://kaledos-36744-default-rtdb.europe-west1.firebasedatabase.app/goods.json", item);
+    return this.http.post("https://kaledos-36744-default-rtdb.europe-west1.firebasedatabase.app/goods.json", item)
+    .pipe (
+      tap(() => this.onGoodsCountChange.emit())
+    );
   }
 
   public loadData() {
@@ -30,7 +35,8 @@ public goods: Good[] = [];
         }),
         tap((data)=> {
         this.goods = data;
-      }));
+        }),
+      );
   }
 
   public loadRecord(id:string) {
@@ -43,5 +49,8 @@ public goods: Good[] = [];
 
   public deleteRecord(id:string) {
     return this.http.delete(`https://kaledos-36744-default-rtdb.europe-west1.firebasedatabase.app/goods/${id}.json`)
+      .pipe (
+        tap(() => this.onGoodsCountChange.emit())
+      );
   }
 }
