@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
 import { ErrorComponent } from '../error/error.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-list-of-goods',
@@ -20,7 +21,7 @@ export class ListOfGoodsComponent {
   public isLoading = false;
   public isError = false;
 
-  public constructor(private goodService:GoodsService) {
+  public constructor(private goodService:GoodsService, private authService:AuthService) {
     this.loadData();
   }
 

@@ -14,8 +14,7 @@
                 </li>
             </ul>
             <div class="d-flex">
-
-                <button class="btn btn-outline-success" type="submit">Atsijungti</button>
+                <button class="btn btn-outline-success" type="submit" *ngIf="isLoggedIn" (click)="onClickLogout()">Atsijungti</button>
             </div>
         </div>
     </div>
